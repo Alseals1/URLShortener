@@ -11,6 +11,9 @@ __pycache__/
 *.pyo
 *.pyd
 
+# AWS
+.aws/
+
 # Ignore AWS Lambda zip package
 lambda.zip
 

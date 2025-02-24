@@ -1,11 +1,15 @@
 import json
 import boto3
+from dotenv import load_dotenv
 import os
 import string
 import random
 
+load_dotenv()
+
 dynamodb = boto3.resource("dynamodb")
-table = dynamodb.Table(os.environ["TABLE_NAME"])
+table_name = os.getenv("TABLE_NAME")
+BASE_URL = os.getenv("BASE_URL")
 
 def generate_short_code():
     """Generate a random 6-character short code"""
@@ -14,7 +18,7 @@ def generate_short_code():
 def lambda_handler(event, context):
     print("Received event:", json.dumps(event))  # Debugging
     
-    # Ensure 'body' exists
+   
     if "body" not in event:
         return {
             "statusCode": 400,
@@ -22,8 +26,8 @@ def lambda_handler(event, context):
         }
 
     try:
-        body = json.loads(event["body"])  # Parse the JSON body
-        long_url = body.get("long_url")  # Extract the long URL
+        body = json.loads(event["body"]) 
+        long_url = body.get("long_url")  
         
         if not long_url:
             return {
@@ -31,9 +35,8 @@ def lambda_handler(event, context):
                 "body": json.dumps({"error": "Missing 'long_url' in request"})
             }
         
-        # Here, generate the short URL logic (dummy example)
-        short_code = "xYz123"
-        short_url = f"https://uxgri32pj7.execute-api.us-east-1.amazonaws.com/{short_code}"
+        short_code = generate_short_code()
+        short_url = f"{BASE_URL}/{short_code}"
         
         return {
             "statusCode": 200,
@@ -41,7 +44,7 @@ def lambda_handler(event, context):
         }
     
     except Exception as e:
-        print("Error:", str(e))  # Log the error
+        print("Error:", str(e)) 
         return {
             "statusCode": 500,
             "body": json.dumps({"error": "Internal server error"})
