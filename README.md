@@ -10,6 +10,7 @@ A serverless URL shortener built using **AWS Lambda, API Gateway, S3, and Terraf
 - Secure and scalable, following AWS best practices
 
 Diagram Here
+![URL Shortner Diagram](URLShortener.drawio.png)
 
 ## Prerequisites
 
