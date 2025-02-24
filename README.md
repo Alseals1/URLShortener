@@ -9,7 +9,6 @@ A serverless URL shortener built using **AWS Lambda, API Gateway, S3, and Terraf
 - Terraform used for automated infrastructure deployment
 - Secure and scalable, following AWS best practices
 
-Diagram Here
 ![URL Shortner Diagram](URLShortener.drawio.png)
 
 ## Prerequisites
