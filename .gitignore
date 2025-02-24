@@ -21,5 +21,10 @@ lambda.zip
 .DS_Store
 Thumbs.db
 
+fakelambda.txt
+
+.env
+terraform.tfvars
+
 # Ignore VS Code settings (optional)
 .vscode/

@@ -8,12 +8,12 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-1"
+  region = var.aws_region
 }
 
 
 resource "aws_s3_bucket" "url_shortener" {
-  bucket = "firstklass-url-shortener-bucket-v1"
+  bucket = var.s3_bucket_name
 }
 
 resource "aws_s3_bucket_public_access_block" "url_shortener" {
@@ -26,7 +26,7 @@ resource "aws_s3_bucket_public_access_block" "url_shortener" {
 }
 
 resource "aws_dynamodb_table" "urls" {
-  name = "shortened-urls"
+  name = var.dynamodb_table_name
   billing_mode = "PAY_PER_REQUEST"
 
   hash_key = "short_code"
@@ -54,7 +54,7 @@ resource "aws_iam_role" "lambda_role" {
 }
 
 resource "aws_lambda_function" "url_shortener" {
-    function_name = "urlShortener"
+    function_name = var.lambda_function_name
     role = aws_iam_role.lambda_role.arn
     runtime = "python3.9"
     handler = "lambda_function.lambda_handler"
@@ -65,7 +65,7 @@ resource "aws_lambda_function" "url_shortener" {
 
     environment {
       variables = {
-        TABLE_NAME = aws_dynamodb_table.urls.name
+        TABLE_NAME = var.dynamodb_table_name
       }
     }
 }
